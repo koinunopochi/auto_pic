@@ -24,6 +24,8 @@ class AutoScreenShot:
             self, name, path, key, start_num, finish_num, left_x, left_y, right_x, right_y, btn_x, btn_y):
         try:
             os.makedirs(path, exist_ok=True)
+            right_x = right_x - left_x
+            right_y = right_y - left_y
             for i in range(start_num, finish_num):
                 screenshot = pyautogui.screenshot(region=(left_x, left_y, right_x, right_y))
                 filename = f"{name}_{i}.png"
