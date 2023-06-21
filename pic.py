@@ -63,7 +63,6 @@ class AutoScreenShot:
         y_name.delete(0, "end")
         x_name.insert(0, x)
         y_name.insert(0, y)
-        self.baseGround.deiconify()
 
     def btn_start(self, name, path, key, start_num, finish_num, left_x, left_y, right_x, right_y, btn_x, btn_y,one_x,one_y):
         try:
@@ -84,6 +83,7 @@ class AutoScreenShot:
 
         print(l_x, l_y, r_x, r_y)
         print(btn_x, btn_y)
+        self.baseGround.withdraw()
         self.get_screenshot(name, path, key, s, f, l_x, l_y, r_x, r_y, btn_x, btn_y,one_x,one_y)
         self.baseGround.deiconify()
 
