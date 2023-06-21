@@ -12,6 +12,7 @@
   "default_click_position_y": "",
   "default_one_click_position_x": "",
   "default_one_click_position_y": "",
+  "default_wait_time": 5,
   "default_save_path": "./pic/output/",
   "default_save_name": "screenshot",
   "default_stop_key": "ctrl+shift+z"

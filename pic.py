@@ -27,8 +27,9 @@ class AutoScreenShot:
             os.makedirs(path, exist_ok=True)
             right_x = right_x - left_x
             right_y = right_y - left_y
-            pyautogui.click(x=one_x, y=one_y, duration=1)
-            sleep.sleep(6)
+            if one_x != "" or one_y != "":
+              pyautogui.click(x=one_x, y=one_y, duration=1)
+              sleep.sleep(self.config["default_wait_time"])
             for i in range(start_num, finish_num):
                 screenshot = pyautogui.screenshot(region=(left_x, left_y, right_x, right_y))
                 filename = f"{name}_{i}.png"
@@ -83,7 +84,6 @@ class AutoScreenShot:
 
         print(l_x, l_y, r_x, r_y)
         print(btn_x, btn_y)
-        self.baseGround.withdraw()
         self.get_screenshot(name, path, key, s, f, l_x, l_y, r_x, r_y, btn_x, btn_y,one_x,one_y)
         self.baseGround.deiconify()
 
