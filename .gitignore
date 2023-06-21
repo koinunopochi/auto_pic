@@ -1,1 +1,5 @@
 pic/
+__pycache__/
+.benchmarks/
+.pytest_cache/
+screenshots/
