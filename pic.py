@@ -4,6 +4,7 @@ import os
 import tkinter as tk
 import json
 import traceback
+import time as sleep
 
 class AutoScreenShot:
     def __init__(self):
@@ -21,11 +22,13 @@ class AutoScreenShot:
         return x, y
 
     def get_screenshot(
-            self, name, path, key, start_num, finish_num, left_x, left_y, right_x, right_y, btn_x, btn_y):
+            self, name, path, key, start_num, finish_num, left_x, left_y, right_x, right_y, btn_x, btn_y,one_x,one_y):
         try:
             os.makedirs(path, exist_ok=True)
             right_x = right_x - left_x
             right_y = right_y - left_y
+            pyautogui.click(x=one_x, y=one_y, duration=1)
+            sleep.sleep(6)
             for i in range(start_num, finish_num):
                 screenshot = pyautogui.screenshot(region=(left_x, left_y, right_x, right_y))
                 filename = f"{name}_{i}.png"
@@ -61,12 +64,15 @@ class AutoScreenShot:
         y_name.insert(0, y)
         self.baseGround.deiconify()
 
-    def btn_start(self, name, path, key, start_num, finish_num, left_x, left_y, right_x, right_y, btn_x, btn_y):
+    def btn_start(self, name, path, key, start_num, finish_num, left_x, left_y, right_x, right_y, btn_x, btn_y,one_x,one_y):
         try:
           l_x, l_y, r_x, r_y = map(int, (left_x.get(), left_y.get(), right_x.get(), right_y.get()))
           btn_x, btn_y = btn_x.get(), btn_y.get()
+          one_x, one_y = one_x.get(), one_y.get()
           if btn_x != "" and btn_y != "":
             btn_x, btn_y = map(int, (btn_x, btn_y))
+          if one_x != "" and one_y != "":
+            one_x, one_y = map(int, (one_x, one_y))
           s, f = map(int, (start_num.get(), finish_num.get()))
           name, path, key = map(str, (name.get(), path.get(), key.get()))
           if name == "" or path == "" or key == "":
@@ -78,7 +84,7 @@ class AutoScreenShot:
         print(l_x, l_y, r_x, r_y)
         print(btn_x, btn_y)
         self.baseGround.withdraw()
-        self.get_screenshot(name, path, key, s, f, l_x, l_y, r_x, r_y, btn_x, btn_y)
+        self.get_screenshot(name, path, key, s, f, l_x, l_y, r_x, r_y, btn_x, btn_y,one_x,one_y)
         self.baseGround.deiconify()
 
     def create_label_text(self, parent, text):
@@ -139,8 +145,15 @@ class AutoScreenShot:
         btn_y = self.create_entry(self.baseGround)
         btn_y.insert(tk.END, self.config["default_click_position_y"])
         self.create_button(self.baseGround, '取得', lambda: self.set_pos(btn_x, btn_y))
+        
+        self.create_label_text(self.baseGround, 'one_time_btn')
+        one_x = self.create_entry(self.baseGround)
+        one_x.insert(tk.END, self.config["default_one_click_position_x"])
+        one_y = self.create_entry(self.baseGround)
+        one_y.insert(tk.END, self.config["default_one_click_position_y"])
+        self.create_button(self.baseGround, '取得', lambda: self.set_pos(one_x, one_y))
 
-        self.create_button(self.baseGround, '実行', lambda: self.btn_start(name, path, key, start_num, finish_num, left_x, left_y, right_x, right_y, btn_x, btn_y))
+        self.create_button(self.baseGround, '実行', lambda: self.btn_start(name, path, key, start_num, finish_num, left_x, left_y, right_x, right_y, btn_x, btn_y,one_x,one_y))
 
         self.baseGround.mainloop()
 
